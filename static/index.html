@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Пульс продаж</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Пульс продаж — главная">
+      <span class="brand-mark" aria-hidden="true">↗</span>
+      <span>Пульс продаж</span>
+    </a>
+    <div class="file-state"><span class="status-dot"></span><span id="fileLabel">Демо-режим</span></div>
+    <label class="upload-button" for="fileInput">Загрузить данные</label>
+    <input id="fileInput" type="file" accept=".xlsx,.xlsm,.csv" hidden>
+  </header>
+
+  <main class="dashboard">
+    <section class="hero">
+      <div><p class="eyebrow">ОБЗОР БИЗНЕСА</p><h1>Продажи под контролем</h1><p id="periodLabel">Данные за выбранный период</p></div>
+      <button id="mappingButton" class="text-button" type="button">Настроить колонки</button>
+    </section>
+
+    <form id="filterForm" class="filters">
+      <label>Период<div class="date-pair"><input id="dateFrom" type="date"><span>—</span><input id="dateTo" type="date"></div></label>
+      <label>Регион<select id="regionFilter"><option value="">Все регионы</option></select></label>
+      <label>Магазин<select id="storeFilter"><option value="">Все магазины</option></select></label>
+      <label>Продукт<select id="productFilter"><option value="">Все продукты</option></select></label>
+      <button id="resetButton" class="reset-button" type="reset">Сбросить</button>
+    </form>
+
+    <section class="kpi-grid" aria-label="Ключевые показатели">
+      <article class="kpi-card accent"><span>ОБЪЁМ ПРОДАЖ</span><strong id="salesKpi">—</strong><small id="salesDelta">за период</small></article>
+      <article class="kpi-card"><span>ТРАНЗАКЦИИ</span><strong id="transactionsKpi">—</strong><small id="transactionsDelta">уникальных чеков</small></article>
+      <article class="kpi-card"><span>СРЕДНИЙ ЧЕК</span><strong id="averageKpi">—</strong><small id="averageDelta">на транзакцию</small></article>
+      <article class="kpi-card"><span>ДНЕЙ С ПРОДАЖАМИ</span><strong id="daysKpi">—</strong><small id="rowsLabel">строк в выборке</small></article>
+    </section>
+
+    <section class="visual-grid">
+      <article class="panel trend-panel"><div class="panel-title"><div><span>ДИНАМИКА</span><h2>Продажи по времени</h2></div><select id="granularity"><option value="day">По дням</option><option value="week">По неделям</option><option value="month" selected>По месяцам</option></select></div><div id="trendChart" class="chart" role="img" aria-label="График продаж по времени"></div></article>
+      <article class="panel"><div class="panel-title"><div><span>СТРУКТУРА</span><h2>Продажи по регионам</h2></div></div><div id="regionChart" class="bar-chart"></div></article>
+      <article class="panel"><div class="panel-title"><div><span>ЛИДЕРЫ</span><h2>Топ продуктов</h2></div></div><div id="productChart" class="bar-chart"></div></article>
+      <article class="panel"><div class="panel-title"><div><span>ТОЧКИ ПРОДАЖ</span><h2>Топ магазинов</h2></div></div><div id="storeChart" class="bar-chart"></div></article>
+    </section>
+
+    <section class="panel table-panel"><div class="panel-title"><div><span>ДЕТАЛИЗАЦИЯ</span><h2>Данные продаж</h2></div><button id="downloadButton" class="text-button" type="button">Скачать CSV</button></div><div class="table-wrap"><table><thead><tr><th>Дата</th><th>Регион</th><th>Магазин</th><th>Продукт</th><th>Продажи</th><th>Транзакция</th></tr></thead><tbody id="dataBody"></tbody></table></div></section>
+  </main>
+
+  <dialog id="mappingDialog"><form id="mappingForm" method="dialog"><div class="dialog-title"><h2>Сопоставление колонок</h2><button value="cancel" aria-label="Закрыть">×</button></div><p>Укажите, какие поля исходного файла использовать в аналитике.</p><div id="mappingFields" class="mapping-fields"></div><div class="dialog-actions"><button value="cancel" class="secondary-button">Отмена</button><button id="applyMapping" value="default" class="primary-button">Применить</button></div></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

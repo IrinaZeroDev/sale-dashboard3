@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Пульс продаж</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="pages.css">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="/" aria-label="Пульс продаж — главная">
+    <a class="brand" href="./" aria-label="Пульс продаж — главная">
       <span class="brand-mark" aria-hidden="true">↗</span>
       <span>Пульс продаж</span>
     </a>
     <div class="file-state"><span class="status-dot"></span><span id="fileLabel">Демо-режим</span></div>
+    <a class="sample-link" href="test_sales.xlsx" download>Тестовый файл</a>
     <label class="upload-button" for="fileInput">Загрузить данные</label>
     <input id="fileInput" type="file" accept=".xlsx,.xlsm,.csv" hidden>
   </header>
@@ -50,6 +52,7 @@
 
   <dialog id="mappingDialog"><form id="mappingForm" method="dialog"><div class="dialog-title"><h2>Сопоставление колонок</h2><button value="cancel" aria-label="Закрыть">×</button></div><p>Укажите, какие поля исходного файла использовать в аналитике.</p><div id="mappingFields" class="mapping-fields"></div><div class="dialog-actions"><button value="cancel" class="secondary-button">Отмена</button><button id="applyMapping" value="default" class="primary-button">Применить</button></div></form></dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="vendor/xlsx.full.min.js"></script>
   <script type="module" src="app.js"></script>
 </body>
 </html>

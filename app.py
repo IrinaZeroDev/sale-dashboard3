@@ -62,9 +62,13 @@ class DashboardHandler(BaseHTTPRequestHandler):
         if route == "/api/health":
             self.send_json({"status": "ok"})
             return
-        relative = "index.html" if route == "/" else route.lstrip("/")
-        target = (STATIC / relative).resolve()
-        if STATIC.resolve() not in target.parents and target != STATIC.resolve():
+        if route == "/test_sales.xlsx":
+            target = ROOT / "test_sales.xlsx"
+        else:
+            relative = "index.html" if route == "/" else route.lstrip("/")
+            target = (STATIC / relative).resolve()
+        allowed_roots = {STATIC.resolve(), ROOT.resolve()}
+        if not any(target == base or base in target.parents for base in allowed_roots):
             self.send_error(403)
             return
         if not target.is_file():

@@ -1,0 +1,16 @@
+.sample-link {
+  color: #dbe6e2;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.sample-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+  .sample-link {
+    display: none;
+  }
+}

@@ -7,7 +7,7 @@ const elements=Object.fromEntries(['fileInput','fileLabel','mappingButton','mapp
 
 const parseDate=value=>{if(value instanceof Date)return value;const text=String(value??'').trim();if(/^\d{2}\.\d{2}\.\d{4}$/.test(text)){const[d,m,y]=text.split('.');return new Date(`${y}-${m}-${d}T00:00:00`)}const date=new Date(text);return Number.isNaN(date.getTime())?null:date};
 const parseNumber=value=>{if(typeof value==='number')return value;const normalized=String(value??'').replace(/\s/g,'').replace(',','.').replace(/[^\d.-]/g,'');const number=Number(normalized);return Number.isFinite(number)?number:0};
-const isoDate=date=>date.toISOString().slice(0,10);
+const isoDate=date=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 const showToast=message=>{elements.toast.textContent=message;elements.toast.classList.add('visible');setTimeout(()=>elements.toast.classList.remove('visible'),2800)};
 const normalizeHeader=value=>String(value??'').trim().toLowerCase().replaceAll('_',' ').replace(/\s+/g,' ');
 const detectColumns=columns=>{const normalized=new Map(columns.map(column=>[normalizeHeader(column),column]));return Object.fromEntries(Object.entries(ALIASES).map(([role,names])=>[role,names.map(name=>normalized.get(name)).find(Boolean)||null]))};

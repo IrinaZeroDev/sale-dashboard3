@@ -3,6 +3,7 @@ from __future__ import annotations
 import io
 import json
 import mimetypes
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
@@ -58,6 +59,9 @@ class DashboardHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         route = urlparse(self.path).path
+        if route == "/api/health":
+            self.send_json({"status": "ok"})
+            return
         relative = "index.html" if route == "/" else route.lstrip("/")
         target = (STATIC / relative).resolve()
         if STATIC.resolve() not in target.parents and target != STATIC.resolve():
@@ -105,6 +109,8 @@ class DashboardHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    address = ("127.0.0.1", 8000)
-    print("Дашборд запущен: http://127.0.0.1:8000")
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", "8000"))
+    address = (host, port)
+    print(f"Дашборд запущен: http://{host}:{port}")
     ThreadingHTTPServer(address, DashboardHandler).serve_forever()
